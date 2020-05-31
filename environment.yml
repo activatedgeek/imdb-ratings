@@ -1,0 +1,12 @@
+name: imdb
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pip
+  - pip:
+    - jupyterlab
+    - ipywidgets
+    - altair
+    - numpy
+    - tqdm
