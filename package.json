@@ -1,0 +1,14 @@
+{
+  "name": "imdb-ratings",
+  "version": "0.0.1",
+  "description": "Extract IMDb ratings",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "mine": "node src/index.js"
+  },
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "playwright": "^1.0.2"
+  }
+}
