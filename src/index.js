@@ -69,7 +69,7 @@ function sleep(ms) {
 
 
 (async () => {
-  const browser = await webkit.launch({ headless: false });
+  const browser = await webkit.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url);
 
