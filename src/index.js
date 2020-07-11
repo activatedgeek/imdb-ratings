@@ -6,7 +6,19 @@ const { createObjectCsvWriter } = require('csv-writer');
 const url = 'https://www.imdb.com/user/ur34765497/ratings';
 const filename = 'data/imdb.csv';
 const keyOrder = ['title', 'range_year', 'genre', 'rating', 'user_rating', 'votes'];
-const csvHeader = ['title', 'release_year', 'genre', 'rating', 'user_rating', 'votes', 'range_year'];
+const csvHeader = [
+  { id: 'imdbid', title: 'Const' },
+  { id: 'user_rating', title: 'Your Rating' },
+  // { id: 'temp1', title: 'Date Added' },
+  { id: 'title', title: 'Title' },
+  // { id: 'temp2', title: 'Title Type' },
+  // { id: 'temp3', title: 'Directors' },
+  { id: 'rating', title: 'IMDb Rating' },
+  // { id: 'temp4', title: 'Runtime (mins)' },
+  { id: 'release_year', title: 'Year' },
+  { id: 'genre', title: 'Genres' },
+  { id: 'votes', title: 'Num Votes' },
+];
 const nextSelectorPath = '#ratings-container > div.footer.filmosearch > div > div > a.flat-button.next-page';
 
 
@@ -30,6 +42,7 @@ async function processRecords(ratings) {
 
   const records = [];
   for (let j = 0; j < N; j++) {
+    const url = await ratings[0][j].getAttribute('href')
     const txt = await Promise.all(keyOrder.map((_, i) => ratings[i][j].innerText()));
 
     let m = {};
@@ -42,6 +55,12 @@ async function processRecords(ratings) {
     m['rating'] = parseFloat(m['rating']);
     m['user_rating'] = parseFloat(m['user_rating']);
     m['votes'] = parseInt(m['votes'].split(',').join(''), 10);
+    m['imdbid'] = url.split('/')[2]
+
+    // m['temp1'] = ''
+    // m['temp2'] = ''
+    // m['temp3'] = ''
+    // m['temp4'] = ''
 
     records.push(m);
   }
@@ -69,7 +88,7 @@ function sleep(ms) {
 
 
 (async () => {
-  const browser = await webkit.launch({ headless: true });
+  const browser = await webkit.launch({ headless: false });
   const page = await browser.newPage();
   await page.goto(url);
 
